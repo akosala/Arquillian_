@@ -1,0 +1,11 @@
+User:
+  - age: 2
+    gender: MAN
+    login: test1
+    name: test1
+    surname: isa4
+  - age: 3
+    gender: MAN
+    login: test2
+    name: test2
+    surname: isa4

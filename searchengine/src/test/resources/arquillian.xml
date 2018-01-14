@@ -5,6 +5,10 @@
 
     <defaultProtocol type="Servlet 3.0"/>
 
+    <extension qualifier="persistence">
+        <property name="defaultDataSource">${test-database.jndi}</property>
+    </extension>
+
     <container qualifier="wildfly-remote">
         <configuration>
             <property name="managementAddress">127.0.0.1</property>

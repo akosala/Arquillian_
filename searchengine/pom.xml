@@ -84,6 +84,12 @@
             <scope>test</scope>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-persistence-dbunit</artifactId>
+            <version>1.0.0.Alpha7</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
