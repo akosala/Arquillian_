@@ -266,6 +266,10 @@
                     <version>2.1.0.Final</version>
                 </dependency>
             </dependencies>
+            <properties>
+                <test-database.jndi>java:jboss/datasources/ExampleDS</test-database.jndi>
+                <test-database.generation>drop-and-create</test-database.generation>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -306,6 +310,38 @@
                                 <arquillian.launch>wildfly-remote</arquillian.launch>
                             </systemPropertyVariables>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>IT-remote-external-db</id>
+            <properties>
+                <test-database.jndi>java:jboss/datasources/testDS</test-database.jndi>
+                <test-database.generation>update</test-database.generation>
+                <test-database.connection>jdbc:mysql://192.168.99.100:3306/test</test-database.connection>
+                <test-database.user>test-user</test-database.user>
+                <test-database.password>test</test-database.password>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>start wildfly for test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>execute-commands</goal>
+                                </goals>
+                                <configuration>
+                                    <scripts>
+                                        <script>target/scripts/setup-test-datasource.cli</script>
+                                    </scripts>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

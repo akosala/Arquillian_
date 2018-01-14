@@ -1,0 +1,27 @@
+connect
+
+if (outcome != success) of /core-service=module-loading/:module-info(name=mysql)
+    echo install mysql driver
+    module add --name=mysql \
+        --resources=${settings.localRepository}/mysql/mysql-connector-java/${mysql.version}/mysql-connector-java-${mysql.version}.jar \
+        --dependencies=javax.api,javax.transaction.api
+    /subsystem=datasources/jdbc-driver=mysql: \
+        add( \
+            driver-name="mysql", \
+            driver-module-name="mysql")
+else
+    echo mysql driver already installed
+end-if
+
+if (outcome != success) of /subsystem=datasources/data-source=test-db:read-resource
+    echo add mysql datasource
+    /subsystem=datasources/data-source=test-db: \
+        add( \
+         jndi-name="${test-database.jndi}", \
+         driver-name=mysql, \
+         connection-url="${test-database.connection}", \
+         user-name="${test-database.user}", \
+         password="${test-database.password}")
+else
+    echo mysql datasource already present
+end-if

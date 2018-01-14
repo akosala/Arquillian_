@@ -1,10 +1,10 @@
 <persistence>
     <persistence-unit name="pUnit">
-        <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+        <jta-data-source>${test-database.jndi}</jta-data-source>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action"
-                      value="drop-and-create"/>
+                      value="${test-database.generation}"/>
         </properties>
     </persistence-unit>
 </persistence>
