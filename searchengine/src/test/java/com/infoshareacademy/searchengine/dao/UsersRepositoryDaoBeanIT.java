@@ -15,6 +15,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -23,11 +24,14 @@ import java.io.File;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(Arquillian.class)
 public class UsersRepositoryDaoBeanIT {
     @Inject
     private UsersRepositoryDao usersRepositoryDao;
+    private static UsersRepository usersRepository = mock(UsersRepository.class);
 
     @Deployment
     public static Archive<?> createDeployment() {
@@ -49,7 +53,7 @@ public class UsersRepositoryDaoBeanIT {
 
     @Produces
     public UsersRepository getUsersRepository() {
-        return mock(UsersRepository.class);
+        return usersRepository;
     }
 
     @Test
@@ -59,6 +63,8 @@ public class UsersRepositoryDaoBeanIT {
 
         usersRepositoryDao.addUser(user);
 
-        assertThat(user.getGender(), equalTo(Gender.MAN));
+        ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        verify(usersRepository, times(1)).addUser(userArgumentCaptor.capture());
+        assertThat(userArgumentCaptor.getValue().getGender(), equalTo(Gender.MAN));
     }
 }
