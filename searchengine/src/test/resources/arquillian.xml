@@ -24,4 +24,11 @@
         </configuration>
     </container>
 
+    <container qualifier="wildfly-managed">
+        <configuration>
+            <property name="jbossHome">${wildfly.jbossHome}</property>
+            <property name="javaVmArguments">${wildfly.debug-opts}</property>
+        </configuration>
+    </container>
+
 </arquillian>

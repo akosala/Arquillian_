@@ -109,6 +109,12 @@
         <auth-datasource.connection>jdbc:mysql://192.168.99.100:3306/isa-jee-auth</auth-datasource.connection>
         <auth-datasource.user>root</auth-datasource.user>
         <auth-datasource.password>root</auth-datasource.password>
+        <test-database.jndi>java:jboss/datasources/ExampleDS</test-database.jndi>
+        <test-database.generation>drop-and-create</test-database.generation>
+        <db-unit.datatypeFactory>org.dbunit.dataset.datatype.DefaultDataTypeFactory</db-unit.datatypeFactory>
+        <db-unit.metadataHandler>org.dbunit.database.DefaultMetadataHandler</db-unit.metadataHandler>
+        <db-unit.caseSensitiveTableNames>false</db-unit.caseSensitiveTableNames>
+        <db-unit.schema/>
     </properties>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -272,14 +278,6 @@
                     <version>2.1.0.Final</version>
                 </dependency>
             </dependencies>
-            <properties>
-                <test-database.jndi>java:jboss/datasources/ExampleDS</test-database.jndi>
-                <test-database.generation>drop-and-create</test-database.generation>
-                <db-unit.datatypeFactory>org.dbunit.dataset.datatype.DefaultDataTypeFactory</db-unit.datatypeFactory>
-                <db-unit.metadataHandler>org.dbunit.database.DefaultMetadataHandler</db-unit.metadataHandler>
-                <db-unit.caseSensitiveTableNames>false</db-unit.caseSensitiveTableNames>
-                <db-unit.schema/>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -318,6 +316,40 @@
                         <configuration>
                             <systemPropertyVariables>
                                 <arquillian.launch>wildfly-remote</arquillian.launch>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>IT-managed</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.arquillian</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>2.1.0.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>download-wildfly</id>
+                                <phase>pre-integration-test</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <arquillian.launch>wildfly-managed</arquillian.launch>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
