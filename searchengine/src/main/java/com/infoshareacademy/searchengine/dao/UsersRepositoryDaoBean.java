@@ -5,8 +5,8 @@ import com.infoshareacademy.searchengine.interceptors.AddUserInterceptor;
 import com.infoshareacademy.searchengine.interceptors.AddUserSetGenderInterceptor;
 import com.infoshareacademy.searchengine.repository.UsersRepository;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @Stateless
 public class UsersRepositoryDaoBean implements UsersRepositoryDao, UsersRepositoryDaoRemote {
 
-    @EJB
+    @Inject
     private UsersRepository usersRepository;
 
     @Override

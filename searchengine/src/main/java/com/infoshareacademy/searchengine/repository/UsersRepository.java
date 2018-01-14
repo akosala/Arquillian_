@@ -2,35 +2,14 @@ package com.infoshareacademy.searchengine.repository;
 
 import com.infoshareacademy.searchengine.domain.User;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateless
-public class UsersRepository {
+public interface UsersRepository {
+    boolean addUser(User user);
 
-    @PersistenceContext(unitName = "pUnit")
-    private EntityManager entityManager;
+    User getUserById(int id);
 
-    public boolean addUser(User user) {
-        entityManager.persist(user);
-        System.out.println("User " + user + " added");
-        return true;
-    }
+    User getUserByLogin(String login);
 
-    public User getUserById(int id) {
-        return entityManager.find(User.class, id);
-    }
-
-    public User getUserByLogin(String login) {
-        return (User) entityManager.createNamedQuery("getUserByLogin")
-                .setParameter("login", login)
-                .getSingleResult();
-    }
-
-    public List<User> getUsersList() {
-        return entityManager.createNamedQuery("getAll")
-                .getResultList();
-    }
+    List<User> getUsersList();
 }
