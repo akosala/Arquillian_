@@ -9,6 +9,13 @@
         <property name="defaultDataSource">${test-database.jndi}</property>
     </extension>
 
+    <extension qualifier="persistence-dbunit">
+        <property name="datatypeFactory">${db-unit.datatypeFactory}</property>
+        <property name="metadataHandler">${db-unit.metadataHandler}</property>
+        <property name="caseSensitiveTableNames">${db-unit.caseSensitiveTableNames}</property>
+        <property name="schema">${db-unit.schema}</property>
+    </extension>
+
     <container qualifier="wildfly-remote">
         <configuration>
             <property name="managementAddress">127.0.0.1</property>
