@@ -7,7 +7,8 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "getUserByLogin", query = "from User u where u.login=:login"),
-        @NamedQuery(name = "getAll", query = "from User")
+        @NamedQuery(name = "getAll", query = "from User"),
+        @NamedQuery(name = "join", query = "select u from User u inner join Phone p on u.id = p.user.id")
 })
 public class User {
 
@@ -31,8 +32,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Phone> phones = new ArrayList<>();
 
     public String getName() {

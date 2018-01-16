@@ -3,6 +3,9 @@ package com.infoshareacademy.searchengine.domain;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "x", query = "select p.user from Phone p where p.number='222'"),
+})
 public class Phone {
 
     @Id
@@ -11,6 +14,18 @@ public class Phone {
     private Long id;
 
     private String number;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public Long getId() {
         return id;

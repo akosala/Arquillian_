@@ -1,6 +1,7 @@
 package com.infoshareacademy.searchengine.servlets;
 
 import com.infoshareacademy.searchengine.domain.Car;
+import com.infoshareacademy.searchengine.domain.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,7 +24,7 @@ public class CarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        addCar();
+//        addCar();
         updateCar();
         PrintWriter writer = resp.getWriter();
         writer.println("Car operation processed");
@@ -34,9 +35,11 @@ public class CarServlet extends HttpServlet {
     }
 
     private void updateCar() {
-        entityManager.createNamedQuery("update")
-                .setParameter("model", "Mazda rx")
-                .setParameter("modelToUpdate", "Bmw x2")
-                .executeUpdate();
+        User u = (User) entityManager.createNamedQuery("join").getSingleResult();
+        System.out.println("bla");
+//        entityManager.createNamedQuery("update")
+//                .setParameter("model", "Mazda rx")
+//                .setParameter("modelToUpdate", "Bmw x2")
+//                .executeUpdate();
     }
 }
