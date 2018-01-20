@@ -17,7 +17,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 
 @RunWith(Arquillian.class)
-public class StatisticsRepositoryDaoBeanTest {
+public class StatisticsRepositoryDaoBeanIT {
 
     @EJB
     private StatisticsRepositoryDao repositoryDaoBean;
